@@ -14,5 +14,5 @@ typedef struct BasicStruct {
 	int b; 
 } BasicStruct;
 int add_struct(BasicStruct);
-
+int add_structs(unsigned, BasicStruct*);
 #endif 

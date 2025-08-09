@@ -26,3 +26,11 @@ int call_with_input(int arg) {
 int add_struct(BasicStruct obj) {
 	return obj.a + obj.b;
 }
+
+int add_structs(unsigned len, BasicStruct *objs) {
+	int sum = 0; 
+	for(int i = 0; i < len; ++i) {
+		sum += objs[i].a + objs[i].b;
+	}
+	return sum;
+}
