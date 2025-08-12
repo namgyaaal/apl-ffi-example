@@ -13,10 +13,10 @@ fn4 ← 'I4 ' 'add_struct' ' {I4 I4}'
 fn5 ← ' ' 'print_str' ' <0T1[]' 
 fn6 ← 'I4 ' 'add_structs ' 'U <{I4 I4}[]' 
 
-fn_mat ← fn0 fn1 fn2 fn3 fn4 fn5 fn6
-⍝ Figure out a way to improve this. 
-fn_mat ← {(⊃(⍵[0])), dylib, (⊃(⍵[1])), (⊃(⍵[2]))} ¨fn_mat
-⎕NA ¨fn_mat
+fn_list ← fn0 fn1 fn2 fn3 fn4 fn5 fn6
+fn_list ← {∊ ¯1⌽dylib, 1⌽⍵} ¨fn_list
+
+⎕NA ¨fn_list
 
 call_with_side_effects
 ⎕ ← get_side_effects 
@@ -26,4 +26,22 @@ print
 print_str ⊂'hello world!'
 
 structs ← (1 2) (3 4) (5 6) (7 8)
-⎕ ← add_structs (≢structs),⊂structs
+⎕ ← add_structs (≢structs),⊂structs 
+
+
+⍝ Sanitizing input choice 1: Flooring 
+⎕ ← call_with_input ⌊10.5
+
+⍝ Sanitizing input choice 2: 
+⍝    Some sort of error guard? 
+fn_call_with ← {
+    ⍝ 11 is a domain error 
+    11::'Call with expects an integer'
+    call_with_input ⍵
+}
+
+⎕ ← fn_call_with 10.5
+
+⍝ Do other stuff afterwards 
+print_str ⊂'stuff afterwards:'
+
