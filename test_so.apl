@@ -5,24 +5,29 @@
 
 dylib ← './build/libbasic.dylib|'
 
-fn0 ← ' ' 'print' ' ' 
-fn1 ← ' '  'call_with_side_effects' ' '
-fn2 ← 'I4 ' 'get_side_effects'       ' ' 
-fn3 ← 'I4 ' 'call_with_input'        ' I4'
-fn4 ← 'I4 ' 'add_struct' ' {I4 I4}' 
-fn5 ← ' ' 'print_str' ' <0T1[]' 
-fn6 ← 'I4 ' 'add_structs ' 'U <{I4 I4}[]' 
 
-fn_list ← fn0 fn1 fn2 fn3 fn4 fn5 fn6
-fn_list ← {∊ ¯1⌽dylib, 1⌽⍵} ¨fn_list
+fns ← ⍬ 
+fns ,← ⊂ ' ' 'print' ' ' 
+fns ,← ⊂ ' '  'call_with_side_effects' ' '
+fns ,← ⊂ 'I4 ' 'get_side_effects'       ' ' 
+fns ,← ⊂'I4 ' 'call_with_input'        ' I4'
+fns ,← ⊂'I4 ' 'add_struct' ' {I4 I4}' 
+fns ,← ⊂' ' 'print_str' ' <0T1[]' 
+fns ,← ⊂'I4 ' 'add_structs ' 'U <{I4 I4}[]'
+fns ,← ⊂'P ' 'get_new_struct' ' I4 I4'
+fns ,← ⊂' ' 'print_struct' ' P'
+fns ,← ⊂' ' 'free_struct' ' P' 
+fns ,← ⊂' ' 'crash' ' '
+fns ,← ⊂'I4 ' 'add_matryoshka' ' {{I4 I4} {I4 I4}}' 
 
-⎕NA ¨fn_list
+fns ← {∊ ¯1⌽dylib, 1⌽⍵} ¨fns
+⎕NA ¨fns
 
 call_with_side_effects
 ⎕ ← get_side_effects 
 ⎕ ← call_with_input 10 
 ⎕ ← add_struct ⊂ (15 get_side_effects)
-print 
+print⍬
 print_str ⊂'hello world!'
 
 structs ← (1 2) (3 4) (5 6) (7 8)
@@ -44,4 +49,22 @@ fn_call_with ← {
 
 ⍝ Do other stuff afterwards 
 print_str ⊂'stuff afterwards:'
+
+⍝ Pointer logic 
+⎕ ← 'Struct with B as side effect'
+struct ← (get_new_struct 4 get_side_effects)
+⎕ ← 'Pointer to struct: ', struct
+print_struct struct
+
+⍝ Free it 
+free_struct struct
+
+⎕ ← 'What happens when you access a dangling pointer?'
+print_struct struct 
+
+
+⍝ Don't uncomment this -- this will crash the script 
+⍝ crash⍬
+
+⎕ ← add_matryoshka ⊂ ((1 2) (3 4))
 

@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 int side_effect = 1;
 
 void print() {
@@ -33,4 +34,28 @@ int add_structs(unsigned len, BasicStruct *objs) {
 		sum += objs[i].a + objs[i].b;
 	}
 	return sum;
+}
+
+BasicStruct *get_new_struct(int a, int b) {
+	BasicStruct *obj = (BasicStruct*)malloc(sizeof(BasicStruct));
+	obj->a = a; 
+	obj->b = b; 
+	return obj;
+} 
+
+void print_struct(BasicStruct *obj) {
+	printf("a: %d b: %d\n", obj->a, obj->b);
+}
+
+void free_struct(BasicStruct *obj) {
+	free(obj);
+}
+
+void crash() {
+	int *p = NULL; 
+	*p = 42;
+}
+
+int add_matryoshka(Matryoshka m) {
+	return m.a.a + m.a.b + m.b.a + m.b.b;
 }
