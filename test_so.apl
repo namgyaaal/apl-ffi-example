@@ -7,6 +7,7 @@ dylib ← './build/libbasic.dylib|'
 
 
 fns ← ⍬ 
+fns ,← ⊂ 'P ' 'side_effect' ' ' 
 fns ,← ⊂ ' ' 'print' ' ' 
 fns ,← ⊂ ' '  'call_with_side_effects' ' '
 fns ,← ⊂ 'I4 ' 'get_side_effects'       ' ' 
@@ -19,6 +20,8 @@ fns ,← ⊂' ' 'print_struct' ' P'
 fns ,← ⊂' ' 'free_struct' ' P' 
 fns ,← ⊂' ' 'crash' ' '
 fns ,← ⊂'I4 ' 'add_matryoshka' ' {{I4 I4} {I4 I4}}' 
+fns ,← ⊂' ' 'print_array' ' <0I4[]'
+fns ,← ⊂' ' 'print_matrix' '<F[] I4 I4'
 
 fns ← {∊ ¯1⌽dylib, 1⌽⍵} ¨fns
 ⎕NA ¨fns
@@ -68,3 +71,8 @@ print_struct struct
 
 ⎕ ← add_matryoshka ⊂ ((1 2) (3 4))
 
+⍝ Arrays
+print_array ⊂ (1 2 3 4 5 6)
+
+⍝ If can't pass matrices: solution is to ravel
+print_array ⊂ (,2 3⍴1 2 3 4 5 6)
