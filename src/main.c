@@ -87,3 +87,13 @@ void print_array(int *test)
 		printf("Array: %d\n", test[i]);
 	}
 }
+
+void print_big_array(float *arr)
+{
+	printf("Printing large array\n");
+	int j = 0;
+	for (int i = 0; i < 10000; i += 1000, j++)
+	{
+		printf("Array: %f\n", arr[i + j]);
+	}
+}

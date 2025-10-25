@@ -21,7 +21,8 @@ fns ,← ⊂' ' 'free_struct' ' P'
 fns ,← ⊂' ' 'crash' ' '
 fns ,← ⊂'I4 ' 'add_matryoshka' ' {{I4 I4} {I4 I4}}' 
 fns ,← ⊂' ' 'print_array' ' <0I4[]'
-fns ,← ⊂' ' 'print_matrix' '<F[] I4 I4'
+fns ,← ⊂' ' 'print_big_array' '<F4[]'
+
 
 fns ← {∊ ¯1⌽dylib, 1⌽⍵} ¨fns
 ⎕NA ¨fns
@@ -76,3 +77,16 @@ print_array ⊂ (1 2 3 4 5 6)
 
 ⍝ If can't pass matrices: solution is to ravel
 print_array ⊂ (,2 3⍴1 2 3 4 5 6)
+
+⍝ Curious in seeing how it handles a lot of data
+start ← ⎕AI[3]
+arr ← ⊂ 1000000⍴1.1 2.2 3.3 4.4
+print_big_array arr
+arr1 ← ⊂ 1000000⍴7.5 1.2 6.7 0.2
+print_big_array arr1
+arr2 ← ⊂ 1000000⍴0.4 6.1 4.5 1.1
+print_big_array arr2
+⌈/⊃arr2 + arr1 + arr
+end ← ⎕AI[3]
+⎕ ← 'Time elapsed (ms):'
+⎕ ← end - start 

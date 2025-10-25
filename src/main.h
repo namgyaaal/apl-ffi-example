@@ -34,4 +34,6 @@ int add_matryoshka(Matryoshka);
 
 void print_array(int *test);
 
+void print_big_array(float *arr);
+
 #endif
